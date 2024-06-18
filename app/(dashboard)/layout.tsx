@@ -1,3 +1,4 @@
+import { ModalProvider } from "@/providers/modal-provider";
 import { SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 export default function DashboardLayout({
@@ -10,6 +11,7 @@ export default function DashboardLayout({
       <SignedOut>
         <RedirectToSignIn />
       </SignedOut>
+      <ModalProvider />
       {children}
     </div>
   );

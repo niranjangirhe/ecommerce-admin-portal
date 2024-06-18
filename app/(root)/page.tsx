@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
-import Image from "next/image";
+import { SignedOut, SignInButton, SignedIn } from "@clerk/nextjs";
 
 export default function Home() {
   return (
     <>
       <SignedOut>
-        <SignInButton />
+        <SignInButton>
+          <Button>Sign in</Button>
+        </SignInButton>
       </SignedOut>
       <SignedIn>
         <a
@@ -16,10 +17,6 @@ export default function Home() {
           Dashboard
         </a>
       </SignedIn>
-      <p>
-        Landing page (unprotected route). You can access this page without being
-        signed in.
-      </p>
     </>
   );
 }
