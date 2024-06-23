@@ -1,7 +1,9 @@
 import prismadb from "@/lib/prismadb";
-import { RedirectToSignIn, UserButton } from "@clerk/nextjs";
+import { RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+
+import Navbar from "@/components/navbar";
 
 export default async function DashboardLayout({
   children,
@@ -28,10 +30,7 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <div>
-        <UserButton />
-        This will be a Navbar
-      </div>
+      <Navbar />
       {children}
     </>
   );

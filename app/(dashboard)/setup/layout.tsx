@@ -1,5 +1,4 @@
 import prismadb from "@/lib/prismadb";
-import { ModalProvider } from "@/providers/modal-provider";
 import { SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
