@@ -33,7 +33,9 @@ export const Modal: React.FC<ModalProps> = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <DialogDescription className="text-muted-foreground">
+            {description}
+          </DialogDescription>
         </DialogHeader>
         <div>{children}</div>
       </DialogContent>
