@@ -9,20 +9,20 @@ export async function POST(
   try {
     const { userId } = auth();
     const { storeId } = params;
-    const { label, imageUrl } = await req.json();
+    const { name, billboardId } = await req.json();
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!label) {
-      return new NextResponse("Label is required", {
+    if (!name) {
+      return new NextResponse("Name is required", {
         status: 400,
       });
     }
 
-    if (!imageUrl) {
-      return new NextResponse("Image URL is required", {
+    if (!billboardId) {
+      return new NextResponse("Billboard id is required", {
         status: 400,
       });
     }
@@ -42,17 +42,28 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const billboard = await prismadb.billboard.create({
-      data: {
-        label,
-        imageUrl,
+    const billboardBybillboardId = await prismadb.billboard.findFirst({
+      where: {
+        id: billboardId,
         storeId,
       },
     });
 
-    return NextResponse.json(billboard);
+    if (!billboardBybillboardId) {
+      return new NextResponse("Billboard not found", { status: 400 });
+    }
+
+    const category = await prismadb.category.create({
+      data: {
+        name,
+        billboardId,
+        storeId,
+      },
+    });
+
+    return NextResponse.json(category);
   } catch (error) {
-    console.error("[BILLBOARDS_POST]", error);
+    console.error("[CATEGORIES_POST]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
@@ -68,15 +79,15 @@ export async function GET(
       return new NextResponse("Store ID is required", { status: 400 });
     }
 
-    const billboards = await prismadb.billboard.findMany({
+    const categories = await prismadb.category.findMany({
       where: {
         storeId: storeId,
       },
     });
 
-    return NextResponse.json(billboards);
+    return NextResponse.json(categories);
   } catch (error) {
-    console.error("[BILLBOARDS_GET]", error);
+    console.error("[CATEGORIES_GET]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
