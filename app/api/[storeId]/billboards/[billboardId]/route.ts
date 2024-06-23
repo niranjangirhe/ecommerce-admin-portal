@@ -7,12 +7,7 @@ export async function GET(
   { params }: { params: { billboardId: string } }
 ) {
   try {
-    const { userId } = auth();
     const { billboardId } = params;
-
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
 
     if (!billboardId) {
       return new NextResponse("Billboard ID is required", { status: 400 });

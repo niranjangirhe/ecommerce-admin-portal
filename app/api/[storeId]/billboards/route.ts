@@ -58,16 +58,11 @@ export async function POST(
 }
 
 export async function GET(
-  req: Request,
+  _req: Request,
   { params }: { params: { storeId: string } }
 ) {
   try {
-    const { userId } = auth();
     const { storeId } = params;
-
-    if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
-    }
 
     if (!storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
@@ -75,7 +70,7 @@ export async function GET(
 
     const billboards = await prismadb.billboard.findMany({
       where: {
-        id: storeId,
+        storeId: storeId,
       },
     });
 
