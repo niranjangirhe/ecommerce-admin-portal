@@ -9,6 +9,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
+import { useOrigin } from "@/hooks/use-origin";
 
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -39,6 +40,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
@@ -50,7 +52,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       setLoading(true);
       await axios.patch(`/api/stores/${params.storeId}`, values);
       router.refresh();
-      toast.success("Settings updated successfully.");
+      toast.success("Store updated.");
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
@@ -69,6 +71,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       toast.error("Make sure to delete all products and categories first.");
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
