@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { colorId: string } }
+  { params }: { params: { colorId: string; storeId: string } }
 ) {
   try {
-    const { colorId } = params;
+    const { colorId, storeId } = params;
 
     if (!colorId) {
       return new NextResponse("Color ID is required", { status: 400 });
@@ -16,6 +16,7 @@ export async function GET(
     const color = await prismadb.color.findUnique({
       where: {
         id: colorId,
+        storeId,
       },
     });
 

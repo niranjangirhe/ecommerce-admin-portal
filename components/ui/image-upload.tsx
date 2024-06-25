@@ -11,6 +11,7 @@ interface ImageUploadProps {
   onChange: (value: string) => void;
   onRemove: (value: string) => void;
   value: string[];
+  mulitple?: boolean;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -18,6 +19,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onChange,
   onRemove,
   value,
+  mulitple = false,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -35,27 +37,36 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div>
-      <div className="mb-4 flex items-center gap-4">
-        {value.map((url) => (
-          <div
-            key={url}
-            className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
-          >
-            <div className="z-10 absolute top-2 right-2">
-              <Button
-                type="button"
-                onClick={() => onRemove(url)}
-                variant="destructive"
-                size="icon"
+      <div className="mb-4 overflow-y-auto">
+        <div className="mb-1 w-fit">
+          <div className="grid grid-flow-col gap-2">
+            {value.map((url) => (
+              <div
+                key={url}
+                className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
               >
-                <Trash className="h-4 w-4" />
-              </Button>
-            </div>
-            <Image fill className="object-cover" src={url} alt="Image" />
+                <div className="z-10 absolute top-2 right-2">
+                  <Button
+                    type="button"
+                    onClick={() => onRemove(url)}
+                    variant="destructive"
+                    size="icon"
+                  >
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </div>
+                <Image fill className="object-cover" src={url} alt="Image" />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-      <CldUploadWidget onSuccess={onUpload} uploadPreset="l6n3rbve">
+      <CldUploadWidget
+        onUpload={(res) => {
+          onUpload(res);
+        }}
+        uploadPreset="l6n3rbve"
+      >
         {({ open }) => {
           const onClick = () => {
             open();
@@ -68,7 +79,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               variant="secondary"
             >
               <ImagePlus className="h-4 w-4 mr-2" />
-              Upload an image
+              {mulitple ? "Upload Images" : "Upload an Image"}
             </Button>
           );
         }}
