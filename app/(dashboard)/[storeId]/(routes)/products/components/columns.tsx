@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { CellAction } from "./cell-action";
+import { Color } from "@prisma/client";
 
 export type ProductColumn = {
   id: string;
@@ -11,7 +12,7 @@ export type ProductColumn = {
   price: string;
   size: string;
   category: string;
-  color: string;
+  color: Color;
   isFeatured: boolean;
   isArchived: boolean;
   createdAt: string;
@@ -117,12 +118,12 @@ export const columns: ColumnDef<ProductColumn>[] = [
     },
     cell: ({ row }) => {
       return (
-        <div className="flex items-center gap-x-2">
-          {row.original.color}
+        <div className="flex items-center gap-x-2 ">
           <div
             className="w-6 h-6 rounded-full border"
-            style={{ backgroundColor: row.original.color }}
+            style={{ backgroundColor: row.original.color.value }}
           />
+          {row.original.color.name}
         </div>
       );
     },
