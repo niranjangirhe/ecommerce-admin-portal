@@ -326,7 +326,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                               {color.name}
                             </SelectItem>
                             <div
-                              className="w-6 h-6 rounded-full border"
+                              className="w-6 h-6 rounded-full border border-gray-600"
                               style={{ backgroundColor: color.value }}
                             />
                           </div>

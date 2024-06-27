@@ -1,5 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
+import { Product } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -160,35 +161,44 @@ export async function GET(
       return new NextResponse("Store ID is required", { status: 400 });
     }
 
-    const products = await prismadb.product.findMany({
-      where: {
-        storeId: storeId,
-        categoryId,
-        colorId,
-        sizeId,
-        name: name ? { contains: name } : undefined,
-        isFeatured:
-          isFeatured === "true"
-            ? true
-            : isFeatured === "false"
-            ? false
-            : undefined,
-        isArchived:
-          isArchived === "true"
-            ? true
-            : isArchived === "false"
-            ? false
-            : undefined,
-      },
-      include: {
-        images: true,
-        category: true,
-        color: true,
-        size: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
+    interface Description {
+      description: Buffer | string;
+    }
+
+    const products: (Omit<Product, "description"> & Description)[] =
+      await prismadb.product.findMany({
+        where: {
+          storeId: storeId,
+          categoryId,
+          colorId,
+          sizeId,
+          name: name ? { contains: name } : undefined,
+          isFeatured:
+            isFeatured === "true"
+              ? true
+              : isFeatured === "false"
+              ? false
+              : undefined,
+          isArchived:
+            isArchived === "true"
+              ? true
+              : isArchived === "false"
+              ? false
+              : undefined,
+        },
+        include: {
+          images: true,
+          category: true,
+          color: true,
+          size: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+    products.forEach((product) => {
+      product.description = product.description.toString("utf8");
     });
 
     return NextResponse.json(products);

@@ -18,6 +18,9 @@ export async function GET(
         id: categoryId,
         storeId,
       },
+      include: {
+        billboard: true,
+      },
     });
 
     return NextResponse.json(category);

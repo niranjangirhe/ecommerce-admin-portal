@@ -1,5 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
+import { Product } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -13,18 +14,29 @@ export async function GET(
       return new NextResponse("Product ID is required", { status: 400 });
     }
 
-    const product = await prismadb.product.findUnique({
-      where: {
-        id: productId,
-        storeId,
-      },
-      include: {
-        category: true,
-        color: true,
-        size: true,
-        images: true,
-      },
-    });
+    interface Description {
+      description: Buffer | string;
+    }
+
+    const product: (Omit<Product, "description"> & Description) | null =
+      await prismadb.product.findUnique({
+        where: {
+          id: productId,
+          storeId,
+        },
+        include: {
+          category: true,
+          color: true,
+          size: true,
+          images: true,
+        },
+      });
+
+    if (!product) {
+      return new NextResponse("Product not found", { status: 404 });
+    }
+
+    product.description = product.description.toString("utf8");
 
     return NextResponse.json(product);
   } catch (error) {
