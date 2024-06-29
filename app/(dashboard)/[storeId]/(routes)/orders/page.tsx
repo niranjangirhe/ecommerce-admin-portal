@@ -5,6 +5,13 @@ import { OrderClient } from "./components/client";
 import { OrderColumn } from "./components/columns";
 import { formatter } from "@/lib/utils";
 
+interface OrderItemWithProductName {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
 const OrderPage = async ({
   params,
 }: {
@@ -30,17 +37,17 @@ const OrderPage = async ({
 
   const formattedOrders: OrderColumn[] = orders.map((order) => ({
     id: order.id,
-    products: order.orderItems
-      .map((orderItem) =>
-        (orderItem.product.name + " x " + orderItem.quantity).toString()
-      )
-      .join(", "),
+    orderItems: order.orderItems.map((orderItem) => ({
+      id: orderItem.id,
+      name: orderItem.product.name,
+      quantity: orderItem.quantity,
+      price: Number(orderItem.product.price),
+    })),
+    transactionId: order.transactionId,
     totalAmount: formatter.format(Number(order.totalAmount)),
     isPaid: order.isPaid,
-    createdAt: format(order.createdAt, "MMMM do, yyyy"),
-    isAdminCommentRead: order.isAdminCommentRead,
     status: order.status,
-    trackingId: order.trackingId,
+    createdAt: format(order.createdAt, "MMMM do, yyyy"),
   }));
 
   return (

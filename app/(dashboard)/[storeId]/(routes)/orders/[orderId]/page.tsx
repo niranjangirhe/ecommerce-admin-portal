@@ -1,26 +1,28 @@
 import prismadb from "@/lib/prismadb";
-import BillboardForm from "./components/billboard-form";
+import OrderForm from "./components/order-form";
 
-const BillboardPage = async ({
+const OrderPage = async ({
   params,
 }: {
   params: {
-    billboardId: string;
+    orderId: string;
   };
 }) => {
-  const billboard = await prismadb.billboard.findUnique({
+  const Order = await prismadb.order.findUnique({
     where: {
-      id: params.billboardId,
+      id: params.orderId,
     },
   });
+
+  console.log("Order", Order);
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <BillboardForm initialData={billboard} />
+        <OrderForm initialData={Order} />
       </div>
     </div>
   );
 };
 
-export default BillboardPage;
+export default OrderPage;

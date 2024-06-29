@@ -121,29 +121,31 @@ model Image {
 }
 
 model Order {
-  id                 String      @id @default(uuid())
-  storeId            String
-  store              Store       @relation("StoreToOrder", fields: [storeId], references: [id])
-  orderItems         OrderItem[]
-  isPaid             Boolean     @default(false)
-  total              Decimal
-  discount           Decimal
-  shipping           Decimal
-  GST                Decimal
-  totalAmount        Decimal
-  coupon             String      @default("")
-  userId             String      @default("")
-  phone              String
-  email              String      @default("")
-  address            String
-  comments           Bytes
-  isUserCommentRead  Boolean     @default(false)
-  isAdminCommentRead Boolean     @default(false)
-  status             OrderStatus @default(Created)
-  trackingId         String      @default("")
-  internalComments   Bytes
-  createdAt          DateTime    @default(now())
-  updatedAt          DateTime    @updatedAt
+  id            String      @id @default(uuid())
+  storeId       String
+  store         Store       @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems    OrderItem[]
+  isPaid        Boolean     @default(false)
+  // total              Decimal
+  // discount           Decimal
+  // shipping           Decimal
+  // GST                Decimal
+  totalAmount   Decimal
+  // coupon             String      @default("")
+  // userId             String      @default("")
+  name          String      @default("")
+  phone         String      @default("")
+  email         String      @default("")
+  address       String      @default("")
+  // comments           Bytes
+  // isUserCommentRead  Boolean     @default(false)
+  // isAdminCommentRead Boolean     @default(false)
+  status        OrderStatus @default(Created)
+  transactionId String      @default("")
+  // trackingId         String      @default("")
+  // internalComments   Bytes
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@index([storeId])
 }
@@ -155,7 +157,7 @@ model OrderItem {
   productId String
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
-  price     Decimal
+  // price     Decimal
 
   @@index([orderId])
   @@index([productId])
