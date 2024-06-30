@@ -34,39 +34,22 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const { storeId, orderId } = params;
-    const { name, phone, email, address, status, transactionId, isPaid } =
-      await req.json();
+    const {
+      name,
+      phone,
+      email,
+      address,
+      city,
+      state,
+      postalCode,
+      country,
+      status,
+      transactionId,
+      isPaid,
+    } = await req.json();
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
-    }
-
-    if (!name) {
-      return new NextResponse("Name is required", { status: 400 });
-    }
-
-    if (!phone) {
-      return new NextResponse("Phone is required", { status: 400 });
-    }
-
-    if (!email) {
-      return new NextResponse("Email is required", { status: 400 });
-    }
-
-    if (!address) {
-      return new NextResponse("Address is required", { status: 400 });
-    }
-
-    if (!status) {
-      return new NextResponse("Status is required", { status: 400 });
-    }
-
-    if (!transactionId) {
-      return new NextResponse("Transaction ID is required", { status: 400 });
-    }
-
-    if (isPaid === undefined) {
-      return new NextResponse("Is Paid is required", { status: 400 });
     }
 
     if (!storeId) {
@@ -98,6 +81,10 @@ export async function PATCH(
         phone,
         email,
         address,
+        city,
+        state,
+        postalCode,
+        country,
         status,
         transactionId,
         isPaid,

@@ -34,7 +34,11 @@ export const SizeClient: React.FC<SizeClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable columns={columns} data={data} searchKey="name" />
+      <DataTable
+        columns={columns}
+        data={data}
+        searchKey={["name", "value", "createdAt"]}
+      />
       <Heading title="API" description="API calls for Sizes" />
       <Separator />
       <ApiList entityName="sizes" entityIdName="sizeId" />

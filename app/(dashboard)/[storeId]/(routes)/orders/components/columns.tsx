@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { CellAction } from "./cell-action";
 import { cn, formatter } from "@/lib/utils";
+import Link from "next/link";
 
 interface OrderItemWithProductName {
   id: string;
@@ -27,6 +28,11 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "id",
     header: "Product ID",
+    cell: ({ row }) => (
+      <Link href={`${window.location.href}/${row.original.id}`}>
+        {row.original.id}
+      </Link>
+    ),
   },
   {
     accessorKey: "orderItems",
@@ -65,55 +71,23 @@ export const columns: ColumnDef<OrderColumn>[] = [
   },
   {
     accessorKey: "totalAmount",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total amount
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Total Amount",
     cell: ({ row }) => (
-      <span className="font-semibold flex justify-center">
+      <span className="font-semibold justify-center">
         {row.original.totalAmount}
       </span>
     ),
   },
   {
     accessorKey: "isPaid",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Paid
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Paid",
     cell: ({ row }) => (
-      <div className="flex justify-center">
-        {row.original.isPaid ? "Yes" : "No"}
-      </div>
+      <div className="justify-center">{row.original.isPaid ? "Yes" : "No"}</div>
     ),
   },
   {
     accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Status",
     cell: ({ row }) => {
       const statusBg = {
         Created: "bg-gray-200",
@@ -140,17 +114,7 @@ export const columns: ColumnDef<OrderColumn>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Date
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Created At",
   },
   {
     id: "actions",

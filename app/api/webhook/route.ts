@@ -21,40 +21,38 @@ export async function POST(req: Request) {
     return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
-  const session = event.data.object as Stripe.Checkout.Session;
-  const address = session.customer_details?.address;
+  try {
+    const session = event.data.object as Stripe.Checkout.Session;
+    const address = session.customer_details?.address;
+    const addressString = address?.line1 + ", " + address?.line2;
+    const phone = session.customer_details?.phone || "NA";
+    const name = session.customer_details?.name || "NA";
+    const email = session.customer_details?.email || "NA";
+    const transactionId = session.payment_intent?.toString() || "NA";
 
-  const addressComponents = [
-    address?.line1,
-    address?.line2,
-    address?.city,
-    address?.state,
-    address?.postal_code,
-    address?.country,
-  ];
+    if (event.type === "checkout.session.completed") {
+      await prismadb.order.update({
+        where: {
+          id: session.metadata?.orderId,
+        },
+        data: {
+          isPaid: true,
+          status: "Processing",
+          address: addressString,
+          city: address?.city || "NA",
+          state: address?.state || "NA",
+          postalCode: address?.postal_code || "NA",
+          country: address?.country || "NA",
+          phone,
+          name,
+          email,
+          transactionId,
+        },
+      });
+    }
 
-  const addressString = addressComponents.filter((c) => c !== null).join(", ");
-  const phone = session.customer_details?.phone || "NA";
-  const name = session.customer_details?.name || "NA";
-  const email = session.customer_details?.email || "NA";
-  const transactionId = session.payment_intent?.toString() || "NA";
-
-  if (event.type === "checkout.session.completed") {
-    await prismadb.order.update({
-      where: {
-        id: session.metadata?.orderId,
-      },
-      data: {
-        isPaid: true,
-        status: "Processing",
-        address: addressString,
-        phone,
-        name,
-        email,
-        transactionId,
-      },
-    });
+    return new NextResponse(null, { status: 200 });
+  } catch (e) {
+    return new NextResponse(`Webhook Error: ${e}`, { status: 400 });
   }
-
-  return new NextResponse(null, { status: 200 });
 }

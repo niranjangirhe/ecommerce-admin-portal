@@ -137,6 +137,10 @@ model Order {
   phone         String      @default("")
   email         String      @default("")
   address       String      @default("")
+  city          String      @default("")
+  state         String      @default("")
+  postalCode    String      @default("")
+  country       String      @default("")
   // comments           Bytes
   // isUserCommentRead  Boolean     @default(false)
   // isAdminCommentRead Boolean     @default(false)

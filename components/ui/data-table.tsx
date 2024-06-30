@@ -3,12 +3,10 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -27,7 +25,7 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  searchKey?: string;
+  searchKey?: string[];
 }
 
 export function DataTable<TData, TValue>({
@@ -35,7 +33,6 @@ export function DataTable<TData, TValue>({
   data,
   searchKey = undefined,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -43,12 +40,9 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
-      sorting,
       columnFilters,
     },
   });
@@ -56,17 +50,18 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {searchKey && (
-        <div className="flex items-center py-4">
-          <Input
-            placeholder="Search..."
-            value={
-              (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn(searchKey)?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 py-4 gap-4">
+          {searchKey.map((key) => (
+            <Input
+              placeholder={`Search by ${key}...`}
+              key={key}
+              value={(table.getColumn(key)?.getFilterValue() as string) ?? ""}
+              onChange={(event) =>
+                table.getColumn(key)?.setFilterValue(event.target.value)
+              }
+              className="w-full"
+            />
+          ))}
         </div>
       )}
 

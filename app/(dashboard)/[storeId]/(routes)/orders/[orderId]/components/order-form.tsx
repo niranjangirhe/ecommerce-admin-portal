@@ -30,15 +30,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getStateCodes } from "@/actions/get-state-codes";
 
 interface OrderFormProps {
-  initialData: Order | null;
+  // initialData is of type Order but only one field differs from Order type which is totalAmount  which is of type number
+  initialData: Omit<Order, "totalAmount"> & { totalAmount: number };
 }
 const formSchema = z.object({
-  name: z.string().min(1),
-  phone: z.string().min(1),
-  email: z.string().email(),
+  name: z.string(),
+  phone: z.string(),
+  email: z.string(),
   address: z.string(),
+  state: z.string(),
+  city: z.string(),
+  country: z.string(),
+  postalCode: z.string(),
   status: z.string(),
   transactionId: z.string(),
   isPaid: z.boolean(),
@@ -47,23 +53,14 @@ const formSchema = z.object({
 type OrderFormValues = z.infer<typeof formSchema>;
 
 const status = ["Created", "Processing", "Shipped", "Delivered", "Cancelled"];
-
 const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
-
+  const stateCodes = getStateCodes();
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || {
-      name: "",
-      phone: "",
-      email: "",
-      address: "",
-      status: "",
-      transactionId: "",
-      isPaid: false,
-    },
+    defaultValues: initialData,
   });
 
   if (!initialData) {
@@ -158,6 +155,96 @@ const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
             />
             <FormField
               control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="City" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a State"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {stateCodes.map((s) => (
+                        <SelectItem key={s.code} value={s.code}>
+                          {s.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="postalCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Postal Code</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Postal Code"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Country</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a Country"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="IN">India</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="status"
               render={({ field }) => (
                 <FormItem>
@@ -172,7 +259,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a Size"
+                          placeholder="Select a Status"
                         />
                       </SelectTrigger>
                     </FormControl>

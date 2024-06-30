@@ -68,48 +68,6 @@ export async function PATCH(
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!name) {
-      return new NextResponse("Name is required", {
-        status: 400,
-      });
-    }
-
-    if (!description) {
-      return new NextResponse("Description is required", {
-        status: 400,
-      });
-    }
-
-    if (!price) {
-      return new NextResponse("Price is required", {
-        status: 400,
-      });
-    }
-
-    if (!categoryId) {
-      return new NextResponse("CategoryId is required", {
-        status: 400,
-      });
-    }
-
-    if (!colorId) {
-      return new NextResponse("ColorId is required", {
-        status: 400,
-      });
-    }
-
-    if (!sizeId) {
-      return new NextResponse("SizeId is required", {
-        status: 400,
-      });
-    }
-
-    if (!images || !images.length) {
-      return new NextResponse("Images are required", {
-        status: 400,
-      });
-    }
-
     if (!storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
     }
