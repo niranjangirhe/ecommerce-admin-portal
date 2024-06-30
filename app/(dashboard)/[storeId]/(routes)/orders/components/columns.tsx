@@ -27,12 +27,7 @@ export type OrderColumn = {
 export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "id",
-    header: "Product ID",
-    cell: ({ row }) => (
-      <Link href={`${window.location.href}/${row.original.id}`}>
-        {row.original.id}
-      </Link>
-    ),
+    header: "Order ID",
   },
   {
     accessorKey: "orderItems",

@@ -17,11 +17,6 @@ export const columns: ColumnDef<ColorColumn>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => (
-      <Link href={`${window.location.href}/${row.original.id}`}>
-        {row.original.name}
-      </Link>
-    ),
   },
   {
     accessorKey: "value",

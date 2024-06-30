@@ -16,11 +16,6 @@ export const columns: ColumnDef<BillboardColumn>[] = [
   {
     accessorKey: "label",
     header: "Label",
-    cell: ({ row }) => (
-      <Link href={`${window.location.href}/${row.original.id}`}>
-        {row.original.label}
-      </Link>
-    ),
   },
   {
     accessorKey: "createdAt",
