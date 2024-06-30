@@ -85,16 +85,16 @@ export const columns: ColumnDef<OrderColumn>[] = [
     header: "Status",
     cell: ({ row }) => {
       const statusBg = {
-        Created: "bg-gray-200",
-        Processing: "bg-orange-200",
-        Shipped: "bg-blue-200",
-        Delivered: "bg-green-200",
-        Cancelled: "bg-red-200",
+        Created: "bg-gray-400",
+        Processing: "bg-orange-400",
+        Shipped: "bg-blue-400",
+        Delivered: "bg-green-400",
+        Cancelled: "bg-red-400",
       };
       return (
         <div
           className={cn(
-            "flex justify-center rounded-full py-1 px-4 text-sm w-fit",
+            "flex justify-center rounded-full py-1 px-4 text-sm w-fit bg-opacity-50",
             statusBg[row.original.status as keyof typeof statusBg]
           )}
         >

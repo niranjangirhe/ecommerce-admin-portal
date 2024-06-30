@@ -17,8 +17,8 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   return (
     <Card
       className={cn(
-        "bg-white border border-gray-200 rounded-lg shadow-sm",
-        attention && "border-red-500 bg-red-50"
+        "border border-gray-200 rounded-lg shadow-sm",
+        attention && "border-red-500 bg-red-500 bg-opacity-10"
       )}
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
