@@ -3,20 +3,48 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: { orderId: string; storeId: string } }
 ) {
   try {
     const { orderId, storeId } = params;
+    const { searchParams } = new URL(req.url);
+    const phone = searchParams.get("phone") || undefined;
 
     if (!orderId) {
       return new NextResponse("Order ID is required", { status: 400 });
+    }
+
+    if (!storeId) {
+      return new NextResponse("Store ID is required", { status: 400 });
+    }
+
+    if (!phone) {
+      return new NextResponse(
+        'Phone is required. "phone" should be presented as Url parameter',
+        { status: 400 }
+      );
     }
 
     const order = await prismadb.order.findUnique({
       where: {
         id: orderId,
         storeId,
+        phone,
+      },
+      include: {
+        orderItems: {
+          include: {
+            product: {
+              include: {
+                images: true,
+                category: true,
+                color: true,
+                size: true,
+              },
+            },
+          },
+        },
       },
     });
 
