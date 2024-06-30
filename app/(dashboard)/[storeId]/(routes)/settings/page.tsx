@@ -1,6 +1,7 @@
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import prismadb from "@/lib/prismadb";
 
 import SettingsForm from "./components/settings-form";
 
@@ -17,7 +18,7 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
     return <RedirectToSignIn />;
   }
 
-  const store = await prisma?.store.findFirst({
+  const store = await prismadb.store.findFirst({
     where: {
       id: params.storeId,
       userId,
