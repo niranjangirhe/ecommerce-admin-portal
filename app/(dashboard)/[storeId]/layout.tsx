@@ -4,6 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 import Navbar from "@/components/navbar";
+import { Suspense } from "react";
+import Loading from "@/components/ui/loading";
 
 export default async function DashboardLayout({
   children,
@@ -31,7 +33,7 @@ export default async function DashboardLayout({
   return (
     <>
       <Navbar />
-      {children}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </>
   );
 }

@@ -17,6 +17,8 @@ interface OrderItemWithProductName {
 export type OrderColumn = {
   id: string;
   orderItems: OrderItemWithProductName[];
+  name: string;
+  address: string;
   transactionId: string;
   totalAmount: string;
   isPaid: boolean;
@@ -63,6 +65,14 @@ export const columns: ColumnDef<OrderColumn>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "address",
+    header: "Address",
   },
   {
     accessorKey: "totalAmount",

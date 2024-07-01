@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import prismadb from "@/lib/prismadb";
 
 import SettingsForm from "./components/settings-form";
+import Loading from "@/components/ui/loading";
 
 interface SettingsPageProps {
   params: {
@@ -18,9 +20,24 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
     return <RedirectToSignIn />;
   }
 
+  return (
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <Suspense fallback={<Loading />}>
+          <SettingsContent storeId={params.storeId} userId={userId} />
+        </Suspense>
+      </div>
+    </div>
+  );
+};
+
+const SettingsContent: React.FC<{ storeId: string; userId: string }> = async ({
+  storeId,
+  userId,
+}) => {
   const store = await prismadb.store.findFirst({
     where: {
-      id: params.storeId,
+      id: storeId,
       userId,
     },
   });
@@ -29,13 +46,7 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
     redirect("/setup");
   }
 
-  return (
-    <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
-        <SettingsForm initialData={store} />
-      </div>
-    </div>
-  );
+  return <SettingsForm initialData={store} />;
 };
 
 export default SettingsPage;
