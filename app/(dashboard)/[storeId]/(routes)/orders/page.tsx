@@ -51,6 +51,7 @@ const OrderList = async ({ storeId }: { storeId: string }) => {
       price: Number(orderItem.product.price),
     })),
     name: order.name,
+    phone: order.phone,
     address:
       order.address +
       ", " +

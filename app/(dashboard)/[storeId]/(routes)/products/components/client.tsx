@@ -37,7 +37,10 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
       <DataTable
         columns={columns}
         data={data}
-        searchKey={["name", "category", "size", "createdAt"]}
+        searchKey={["id", "name", "category", "size", "createdAt"]}
+        displayColumns={{
+          id: false,
+        }}
       />
       <Heading title="API" description="API calls for Products" />
       <Separator />

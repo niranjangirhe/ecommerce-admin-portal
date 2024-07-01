@@ -18,6 +18,7 @@ export type OrderColumn = {
   id: string;
   orderItems: OrderItemWithProductName[];
   name: string;
+  phone: string;
   address: string;
   transactionId: string;
   totalAmount: string;
@@ -71,6 +72,10 @@ export const columns: ColumnDef<OrderColumn>[] = [
     header: "Name",
   },
   {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
     accessorKey: "address",
     header: "Address",
   },
@@ -114,12 +119,12 @@ export const columns: ColumnDef<OrderColumn>[] = [
     },
   },
   {
-    accessorKey: "transactionId",
-    header: "Transaction ID",
-  },
-  {
     accessorKey: "createdAt",
     header: "Created At",
+  },
+  {
+    accessorKey: "transactionId",
+    header: "Transaction ID",
   },
   {
     id: "actions",

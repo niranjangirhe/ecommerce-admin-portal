@@ -30,7 +30,18 @@ export const OrderClient: React.FC<OrderClientProps> = ({ data }) => {
       <DataTable
         columns={columns}
         data={data}
-        searchKey={["id", "status", "createdAt"]}
+        searchKey={[
+          "id",
+          "name",
+          "phone",
+          "status",
+          "createdAt",
+          "transactionId",
+        ]}
+        displayColumns={{
+          // id: false,
+          transactionId: false,
+        }}
       />
       <Heading title="API" description="API calls for Orders" />
       <Separator />

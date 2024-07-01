@@ -26,12 +26,16 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey?: string[];
+  displayColumns?: {
+    [key: string]: boolean;
+  };
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchKey = undefined,
+  searchKey = [],
+  displayColumns = {},
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -44,6 +48,9 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
+      columnVisibility: {
+        ...displayColumns,
+      },
     },
   });
 
