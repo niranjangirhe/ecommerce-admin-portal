@@ -1,20 +1,15 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prismadb";
 import OrderForm from "./components/order-form";
+import Loading from "@/components/ui/loading";
 
-const OrderPage = async ({
-  params,
-}: {
-  params: {
-    orderId: string;
-  };
-}) => {
+const OrderPageMaker = async ({ orderId }: { orderId: string }) => {
   const order = await prismadb.order.findUnique({
     where: {
-      id: params.orderId,
+      id: orderId,
     },
   });
 
-  // change totalAmount in order to Number
   const newOrder = {
     ...order!,
     totalAmount: Number(order?.totalAmount),
@@ -22,7 +17,7 @@ const OrderPage = async ({
 
   if (!order) {
     return (
-      <div className="flex items-ceter justify-center mt-20">
+      <div className="flex items-center justify-center mt-20">
         Order not found
       </div>
     );
@@ -36,5 +31,17 @@ const OrderPage = async ({
     </div>
   );
 };
+
+const OrderPage = ({
+  params,
+}: {
+  params: {
+    orderId: string;
+  };
+}) => (
+  <Suspense fallback={<Loading />}>
+    <OrderPageMaker orderId={params.orderId} />
+  </Suspense>
+);
 
 export default OrderPage;

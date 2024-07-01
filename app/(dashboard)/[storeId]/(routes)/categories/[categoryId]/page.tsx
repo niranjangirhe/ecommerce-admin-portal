@@ -1,23 +1,24 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prismadb";
 import CategoryForm from "./components/category-form";
+import Loading from "@/components/ui/loading";
 
-const CategoryPage = async ({
-  params,
+const CategoryPageMaker = async ({
+  categoryId,
+  storeId,
 }: {
-  params: {
-    categoryId: string;
-    storeId: string;
-  };
+  categoryId: string;
+  storeId: string;
 }) => {
   const category = await prismadb.category.findUnique({
     where: {
-      id: params.categoryId,
+      id: categoryId,
     },
   });
 
   const billboards = await prismadb.billboard.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
@@ -29,5 +30,21 @@ const CategoryPage = async ({
     </div>
   );
 };
+
+const CategoryPage = ({
+  params,
+}: {
+  params: {
+    categoryId: string;
+    storeId: string;
+  };
+}) => (
+  <Suspense fallback={<Loading />}>
+    <CategoryPageMaker
+      categoryId={params.categoryId}
+      storeId={params.storeId}
+    />
+  </Suspense>
+);
 
 export default CategoryPage;

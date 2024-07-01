@@ -1,16 +1,12 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prismadb";
 import SizeForm from "./components/size-form";
+import Loading from "@/components/ui/loading";
 
-const SizePage = async ({
-  params,
-}: {
-  params: {
-    sizeId: string;
-  };
-}) => {
+const SizePageMaker = async ({ sizeId }: { sizeId: string }) => {
   const size = await prismadb.size.findUnique({
     where: {
-      id: params.sizeId,
+      id: sizeId,
     },
   });
 
@@ -22,5 +18,17 @@ const SizePage = async ({
     </div>
   );
 };
+
+const SizePage = ({
+  params,
+}: {
+  params: {
+    sizeId: string;
+  };
+}) => (
+  <Suspense fallback={<Loading />}>
+    <SizePageMaker sizeId={params.sizeId} />
+  </Suspense>
+);
 
 export default SizePage;

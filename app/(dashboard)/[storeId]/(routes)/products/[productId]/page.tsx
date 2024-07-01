@@ -1,17 +1,18 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prismadb";
 import ProductForm from "./components/product-form";
+import Loading from "@/components/ui/loading";
 
-const ProductPage = async ({
-  params,
+const ProductPageMaker = async ({
+  productId,
+  storeId,
 }: {
-  params: {
-    productId: string;
-    storeId: string;
-  };
+  productId: string;
+  storeId: string;
 }) => {
   const product = await prismadb.product.findUnique({
     where: {
-      id: params.productId,
+      id: productId,
     },
     include: {
       images: true,
@@ -20,19 +21,19 @@ const ProductPage = async ({
 
   const categories = await prismadb.category.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
   const sizes = await prismadb.size.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
   const colors = await prismadb.color.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
@@ -49,5 +50,18 @@ const ProductPage = async ({
     </div>
   );
 };
+
+const ProductPage = ({
+  params,
+}: {
+  params: {
+    productId: string;
+    storeId: string;
+  };
+}) => (
+  <Suspense fallback={<Loading />}>
+    <ProductPageMaker productId={params.productId} storeId={params.storeId} />
+  </Suspense>
+);
 
 export default ProductPage;

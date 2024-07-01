@@ -1,16 +1,12 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prismadb";
 import BillboardForm from "./components/billboard-form";
+import Loading from "@/components/ui/loading";
 
-const BillboardPage = async ({
-  params,
-}: {
-  params: {
-    billboardId: string;
-  };
-}) => {
+const BillboardPageMaker = async ({ billboardId }: { billboardId: string }) => {
   const billboard = await prismadb.billboard.findUnique({
     where: {
-      id: params.billboardId,
+      id: billboardId,
     },
   });
 
@@ -22,5 +18,17 @@ const BillboardPage = async ({
     </div>
   );
 };
+
+const BillboardPage = ({
+  params,
+}: {
+  params: {
+    billboardId: string;
+  };
+}) => (
+  <Suspense fallback={<Loading />}>
+    <BillboardPageMaker billboardId={params.billboardId} />
+  </Suspense>
+);
 
 export default BillboardPage;

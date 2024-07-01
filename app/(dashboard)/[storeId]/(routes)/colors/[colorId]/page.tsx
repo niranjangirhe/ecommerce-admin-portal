@@ -1,16 +1,12 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prismadb";
 import ColorForm from "./components/color-form";
+import Loading from "@/components/ui/loading";
 
-const ColorPage = async ({
-  params,
-}: {
-  params: {
-    colorId: string;
-  };
-}) => {
+const ColorPageMaker = async ({ colorId }: { colorId: string }) => {
   const color = await prismadb.color.findUnique({
     where: {
-      id: params.colorId,
+      id: colorId,
     },
   });
 
@@ -22,5 +18,17 @@ const ColorPage = async ({
     </div>
   );
 };
+
+const ColorPage = ({
+  params,
+}: {
+  params: {
+    colorId: string;
+  };
+}) => (
+  <Suspense fallback={<Loading />}>
+    <ColorPageMaker colorId={params.colorId} />
+  </Suspense>
+);
 
 export default ColorPage;
