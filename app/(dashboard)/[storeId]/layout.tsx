@@ -7,6 +7,11 @@ import Navbar from "@/components/navbar";
 import { Suspense } from "react";
 import Loading from "@/components/ui/loading";
 
+export const metadata = {
+  title: "StoreOps - Admin",
+  description: "StoreOps - Admin",
+};
+
 export default async function DashboardLayout({
   children,
   params,
