@@ -21,12 +21,6 @@ export async function POST(
       });
     }
 
-    if (!billboardId) {
-      return new NextResponse("Billboard id is required", {
-        status: 400,
-      });
-    }
-
     if (!storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
     }
@@ -42,21 +36,24 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const billboardBybillboardId = await prismadb.billboard.findFirst({
-      where: {
-        id: billboardId,
-        storeId,
-      },
-    });
+    if (billboardId && billboardId !== "null") {
+      const billboardBybillboardId = await prismadb.billboard.findFirst({
+        where: {
+          id: billboardId,
+          storeId,
+        },
+      });
 
-    if (!billboardBybillboardId) {
-      return new NextResponse("Billboard not found", { status: 400 });
+      if (!billboardBybillboardId) {
+        return new NextResponse("Billboard not found", { status: 400 });
+      }
     }
+    console.log("billboardBybillboardId", billboardId);
 
     const category = await prismadb.category.create({
       data: {
         name,
-        billboardId,
+        billboardId: billboardId === "null" ? null : billboardId || null,
         storeId,
       },
     });

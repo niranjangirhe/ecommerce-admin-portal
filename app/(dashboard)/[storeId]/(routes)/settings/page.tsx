@@ -40,6 +40,9 @@ const SettingsContent: React.FC<{ storeId: string; userId: string }> = async ({
       id: storeId,
       userId,
     },
+    include: {
+      billboards: true,
+    },
   });
 
   if (!store) {

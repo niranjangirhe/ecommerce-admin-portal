@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { Store } from "@prisma/client";
+import { Billboard, Store } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -25,12 +25,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { ApiAlert } from "@/components/ui/api-alert";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+interface InitialDataProps extends Store {
+  billboards: Billboard[];
+  homepageBillboardId: string | null;
+}
 
 interface SettingsFormProps {
-  initialData: Store;
+  initialData: InitialDataProps;
 }
 const formSchema = z.object({
   name: z.string().min(1),
+  homepageBillboardId: z.string().optional().nullable(),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
@@ -41,10 +54,12 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
-
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      name: initialData.name,
+      homepageBillboardId: initialData.homepageBillboardId || undefined,
+    },
   });
 
   const onSubmit = async (values: SettingsFormValues) => {
@@ -68,6 +83,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       router.push("/setup");
       toast.success("Store deleted successfully.");
     } catch (error) {
+      console.error(error);
       toast.error("Make sure to delete all products and categories first.");
     } finally {
       setLoading(false);
@@ -118,6 +134,39 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="homepageBillboardId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Homepage Billboard</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value || undefined}
+                    defaultValue={field.value || undefined}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value || undefined}
+                          placeholder="Select a billboard"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {initialData.billboards.map((billboard) => (
+                        <SelectItem key={billboard.id} value={billboard.id}>
+                          {billboard.label}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value={"null"}>None</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           <Button type="submit" disabled={loading} className="ml-auto">
@@ -129,6 +178,11 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       <ApiAlert
         title="NEXT_PUBLIC_API_URL "
         description={`${origin}/api/${params.storeId}`}
+        variant="public"
+      />
+      <ApiAlert
+        title="Homepage Billboard API GET"
+        description={`${origin}/api/${params.storeId}/billboards/homepage`}
         variant="public"
       />
     </>

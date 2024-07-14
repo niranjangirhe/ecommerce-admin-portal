@@ -62,15 +62,17 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const billboardBybillboardId = await prismadb.billboard.findFirst({
-      where: {
-        id: billboardId,
-        storeId,
-      },
-    });
+    if (billboardId && billboardId !== "null") {
+      const billboardBybillboardId = await prismadb.billboard.findFirst({
+        where: {
+          id: billboardId,
+          storeId,
+        },
+      });
 
-    if (!billboardBybillboardId) {
-      return new NextResponse("Billboard not found", { status: 400 });
+      if (!billboardBybillboardId) {
+        return new NextResponse("Billboard not found", { status: 400 });
+      }
     }
 
     const category = await prismadb.category.updateMany({
@@ -80,7 +82,7 @@ export async function PATCH(
       },
       data: {
         name,
-        billboardId,
+        billboardId: billboardId === "null" ? null : billboardId || null,
       },
     });
 

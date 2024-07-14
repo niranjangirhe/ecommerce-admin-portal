@@ -39,7 +39,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.refresh();
       toast.success("Billboard deleted.");
     } catch (error) {
-      toast.error("Make sure to delete all categories using this billboard.");
+      toast.error(
+        "Make sure to delete all categories using this billboard. And remove it as homepage billboard from the store settings."
+      );
     } finally {
       setLoading(false);
       setOpen(false);

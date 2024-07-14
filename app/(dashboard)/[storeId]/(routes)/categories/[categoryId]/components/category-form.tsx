@@ -37,7 +37,7 @@ interface CategoryFormProps {
 }
 const formSchema = z.object({
   name: z.string().min(1),
-  billboardId: z.string().min(1),
+  billboardId: z.string().optional().nullable(),
 });
 
 type CategoryFormValues = z.infer<typeof formSchema>;
@@ -62,9 +62,9 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || {
-      name: "",
-      billboardId: "",
+    defaultValues: {
+      name: initialData?.name || "",
+      billboardId: initialData?.billboardId || "",
     },
   });
 
@@ -161,13 +161,13 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
+                    value={field.value || undefined}
+                    defaultValue={field.value || undefined}
                   >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
-                          defaultValue={field.value}
+                          defaultValue={field.value || undefined}
                           placeholder="Select a billboard"
                         />
                       </SelectTrigger>
@@ -178,6 +178,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
                           {billboard.label}
                         </SelectItem>
                       ))}
+                      <SelectItem value={"null"}>None</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

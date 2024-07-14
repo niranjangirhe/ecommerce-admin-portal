@@ -40,7 +40,7 @@ const CategoryList = async ({ storeId }: { storeId: string }) => {
   const formattedCategories: CategoryColumn[] = categories.map((category) => ({
     id: category.id,
     name: category.name,
-    billboardLabel: category.billboard.label,
+    billboardLabel: category.billboard?.label || "None",
     createdAt: format(category.createdAt, "MMMM do, yyyy"),
   }));
 
