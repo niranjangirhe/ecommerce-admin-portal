@@ -54,11 +54,18 @@ export async function DELETE(
       return new NextResponse("Store ID is required", { status: 400 });
     }
 
-    const store = await prismadb.store.deleteMany({
-      where: {
-        id: storeId,
-        userId,
-      },
+    const store = await prismadb.$transaction(async (prisma) => {
+      await prisma.store.update({
+        where: { id: storeId },
+        data: { homepageBillboardId: null },
+      });
+
+      return prisma.store.delete({
+        where: {
+          id: storeId,
+          userId,
+        },
+      });
     });
 
     return NextResponse.json(store);
