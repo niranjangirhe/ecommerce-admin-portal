@@ -6,18 +6,26 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Logo = () => {
-  const { theme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [logo, setLogo] = useState<string>(logoLight);
 
   useEffect(() => {
-    if (theme === "dark") {
+    const currentTheme = theme === "system" ? systemTheme : theme;
+
+    if (currentTheme === "dark") {
       setLogo(logoDark);
     } else {
       setLogo(logoLight);
     }
-  }, [theme]);
+  }, [theme, systemTheme]);
+
   return (
-    <div className="flex items-center h-full w-full">
+    <div
+      className="flex items-center h-full w-full"
+      onClick={() => {
+        window.location.href = "/";
+      }}
+    >
       <Image src={logo} alt="Logo" className="h-full w-full" />
     </div>
   );

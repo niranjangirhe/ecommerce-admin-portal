@@ -19,18 +19,20 @@ export async function GET(
       return new NextResponse("Store ID is required", { status: 400 });
     }
 
-    if (!phone) {
-      return new NextResponse(
-        'Phone is required. "phone" should be presented as Url parameter',
-        { status: 400 }
-      );
+    if (!phone || phone.length != 4) {
+      return new NextResponse("Last 4 digits of phone number is required", {
+        status: 400,
+      });
     }
 
     const order = await prismadb.order.findUnique({
       where: {
         id: orderId,
         storeId,
-        phone,
+        //match last 4 digits of phone number
+        phone: {
+          endsWith: phone.slice(-4),
+        },
       },
       include: {
         orderItems: {

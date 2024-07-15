@@ -4,6 +4,7 @@ import { SignedOut, SignInButton, SignedIn } from "@clerk/nextjs";
 import { ModeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import Logo from "./logo";
+import { LandingMainNav } from "./landing-page-main-nav";
 
 const LandingPageNavBar = async () => {
   return (
@@ -13,6 +14,7 @@ const LandingPageNavBar = async () => {
           <Logo />
         </div>
         <div className="ml-auto flex items-center space-x-4">
+          <LandingMainNav />
           <ModeToggle />
           <SignedOut>
             <SignInButton>
