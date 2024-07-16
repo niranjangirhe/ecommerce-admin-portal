@@ -46,6 +46,26 @@ export async function POST(
     });
   }
 
+  const store = await prismadb.store.findUnique({
+    where: { id: params.storeId },
+  });
+
+  if (!store) {
+    return new NextResponse("Store not found", {
+      status: 404,
+      headers: corsHeaders,
+    });
+  }
+
+  const FRONTEND_STORE_URL = store?.frontEndUrl;
+
+  if (!FRONTEND_STORE_URL) {
+    return new NextResponse("Store frontend URL not found", {
+      status: 400,
+      headers: corsHeaders,
+    });
+  }
+
   const orderWithProducts = orders.map((order) => {
     const product = products.find((product) => product.id === order.id);
 
@@ -100,8 +120,8 @@ export async function POST(
     phone_number_collection: {
       enabled: true,
     },
-    success_url: `${process.env.FRONTEND_STORE_URL}/cart?success=1`,
-    cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?canceled=1`,
+    success_url: `${FRONTEND_STORE_URL}/cart?success=1&orderId=${order.id}`,
+    cancel_url: `${FRONTEND_STORE_URL}/cart?canceled=1&orderId=${order.id}`,
     metadata: {
       orderId: order.id,
     },

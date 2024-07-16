@@ -44,6 +44,7 @@ interface SettingsFormProps {
 const formSchema = z.object({
   name: z.string().min(1),
   homepageBillboardId: z.string().optional().nullable(),
+  frontEndUrl: z.string().optional().nullable(),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
@@ -58,7 +59,8 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: initialData.name,
-      homepageBillboardId: initialData.homepageBillboardId || undefined,
+      homepageBillboardId: initialData.homepageBillboardId,
+      frontEndUrl: initialData.frontEndUrl,
     },
   });
 
@@ -163,6 +165,24 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                       <SelectItem value={"null"}>None</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="frontEndUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Frontend URL</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Frontend URL"
+                      {...field}
+                      value={field.value || undefined}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
