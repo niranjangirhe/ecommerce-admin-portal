@@ -12,6 +12,20 @@ import { sections } from "./components/docSections";
 const DocumentationPage = () => {
   const [activeSection, setActiveSection] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 64) {
+        setScrollY(4);
+      } else {
+        setScrollY(20);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,7 +68,7 @@ const DocumentationPage = () => {
             <Button
               variant="outline"
               size="icon"
-              className="fixed top-4 left-4 z-50"
+              className={`fixed top-${scrollY} transition-all left-4 z-50`}
             >
               <Menu className="h-4 w-4" />
             </Button>
@@ -76,7 +90,7 @@ const DocumentationPage = () => {
           />
         </div>
       )}
-      <div className={`flex-1 p-6 ${isMobile && "pt-20"}`}>
+      <div className={`flex-1 p-6 ${isMobile && "pt-16"}`}>
         <MainContent sections={sections} />
       </div>
     </div>
