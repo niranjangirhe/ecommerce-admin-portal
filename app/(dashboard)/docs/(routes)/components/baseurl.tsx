@@ -13,9 +13,9 @@ const BaseUrlDoc = () => {
         variant="public"
       />
       <p className="pt-2 text-muted-foreground italic whitespace-pre-wrap">
-        Replace 'admin-portal-domain' with the actual domain where your API is
-        hosted. The {`{storeId}`} parameter is the ID of the store you want to
-        get the billboards for.
+        Replace &apos;admin-portal-domain&apos; with the actual domain where
+        your API is hosted. The {`{storeId}`} parameter is the ID of the store
+        you want to get the billboards for.
       </p>
       <p className="pt-4 text-muted-foreground whitespace-pre-wrap">
         This NEXT_PUBLIC_API_URL serves as the foundation for all endpoint paths

@@ -7,64 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Sidebar from "./components/sidebar";
 import MainContent from "./components/main-content";
-import BaseUrlDoc from "./components/baseurl";
-import BillboardAPIDoc from "./components/billboards";
-import LandingPageNavBar from "@/components/landing-page-navbar";
-import CategoryAPIDoc from "./components/categories";
-import SizeAPIDoc from "./components/sizes";
-import ColorAPIDoc from "./components/colors";
-import ProductAPIDoc from "./components/products";
-import OrderAPIDoc from "./components/orders";
-import GettingStartedDoc from "./components/getting-started";
-import IntrosuctionDoc from "./components/introduction";
-
-export const sections = [
-  {
-    id: "introduction",
-    title: "Introduction to StoreOps API Documentation",
-    content: <IntrosuctionDoc />,
-  },
-  {
-    id: "getting-started",
-    title: "Guide to Setup the Admin Portal Locally",
-    content: <GettingStartedDoc />,
-  },
-  {
-    id: "base-url",
-    title: "Base URL",
-    content: <BaseUrlDoc />,
-  },
-  {
-    id: "billboards",
-    title: "Billboards",
-    content: <BillboardAPIDoc />,
-  },
-  {
-    id: "categories",
-    title: "Categories",
-    content: <CategoryAPIDoc />,
-  },
-  {
-    id: "Sizes",
-    title: "Sizes",
-    content: <SizeAPIDoc />,
-  },
-  {
-    id: "colors",
-    title: "Colors",
-    content: <ColorAPIDoc />,
-  },
-  {
-    id: "products",
-    title: "Products",
-    content: <ProductAPIDoc />,
-  },
-  {
-    id: "orders",
-    title: "Orders",
-    content: <OrderAPIDoc />,
-  },
-];
+import { sections } from "./components/docSections";
 
 const DocumentationPage = () => {
   const [activeSection, setActiveSection] = useState("");

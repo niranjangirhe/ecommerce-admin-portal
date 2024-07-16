@@ -1,4 +1,4 @@
-const IntrosuctionDoc = () => {
+const IntroductionDoc = () => {
   return (
     <>
       <p className="mb-4">
@@ -22,7 +22,7 @@ const IntrosuctionDoc = () => {
       </ul>
 
       <p className="mb-4">
-        Whether you're building a custom storefront, integrating e-commerce
+        Whether you&apos;re building a custom storefront, integrating e-commerce
         features into an existing application, or developing admin tools, this
         API provides the necessary endpoints to support your development needs.
       </p>
@@ -30,16 +30,16 @@ const IntrosuctionDoc = () => {
       <p className="mb-4">
         This documentation will guide you through setting up the admin portal
         locally, understanding the required environment variables, and using the
-        various API endpoints. We'll cover authentication, base URLs, and
-        provide detailed information on each endpoint's functionality.
+        various API endpoints. We&apos;ll cover authentication, base URLs, and
+        provide detailed information on each endpoint&apos;s functionality.
       </p>
 
       <p>
-        Let's begin by setting up your development environment and exploring the
-        capabilities of the StoreOps API.
+        Let&apos;s begin by setting up your development environment and
+        exploring the capabilities of the StoreOps API.
       </p>
     </>
   );
 };
 
-export default IntrosuctionDoc;
+export default IntroductionDoc;
