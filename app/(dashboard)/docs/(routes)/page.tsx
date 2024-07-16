@@ -15,17 +15,19 @@ import SizeAPIDoc from "./components/sizes";
 import ColorAPIDoc from "./components/colors";
 import ProductAPIDoc from "./components/products";
 import OrderAPIDoc from "./components/orders";
+import GettingStartedDoc from "./components/getting-started";
+import IntrosuctionDoc from "./components/introduction";
 
 export const sections = [
   {
     id: "introduction",
-    title: "Introduction",
-    content: "This is the introduction to our API.",
+    title: "Introduction to StoreOps API Documentation",
+    content: <IntrosuctionDoc />,
   },
   {
     id: "getting-started",
-    title: "Getting Started",
-    content: "This is the getting started section.",
+    title: "Guide to Setup the Admin Portal Locally",
+    content: <GettingStartedDoc />,
   },
   {
     id: "base-url",

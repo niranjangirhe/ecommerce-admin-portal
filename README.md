@@ -1,34 +1,157 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# StoreOps: Next.js 14 E-Commerce Solution
 
-## Getting Started
+## Introduction
 
-First, run the development server:
+StoreOps is a comprehensive Next.js 14 e-commerce solution that includes a multi-store admin portal and a customer-facing storefront. This project provides a full-featured platform for managing multiple e-commerce stores from a single admin interface, along with a responsive frontend for customers.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+### Key Features:
+
+#### Admin Portal:
+
+- Multi-store management
+- Product and order management
+- Analytics dashboard
+- Scalable APIs for frontend integration
+
+#### Customer Storefront:
+
+- Responsive design
+- Shopping cart functionality
+- Product filtering and search
+- Stripe payment integration
+
+This project demonstrates the power of Next.js 14 in creating a full-stack e-commerce solution, utilizing the latest web technologies to provide a seamless experience for both store administrators and customers.
+
+## Setup Guide
+
+Follow these steps to set up the StoreOps project locally:
+
+1. Clone the repository:
+
+```
+git clone https://github.com/niranjangirhe/ecommerce-admin-portal.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies (Node.js version 20 is recommended):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Set up environment variables as per the sample.env file.
 
-## Learn More
+4. Start the development server:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ensure you have access to all necessary services and replace the placeholder values with your actual credentials.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Additional Requirements
 
-## Deploy on Vercel
+- Clerk account for authentication
+- Stripe account for payment processing
+- Cloudinary account for image hosting
+- MySQL database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Make sure you have accounts set up with these services and have obtained the necessary API keys and credentials.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## API Usage
+
+The admin portal provides APIs that can be used by the storefront or other applications. The base URL for API requests is:
+
+```
+https://your-admin-portal-domain.com/api/{storeId}
+```
+
+Replace 'admin-portal-domain' with the actual domain where your admin portal is hosted. The `{storeId}` parameter is the ID of the specific store you want to interact with.
+
+If you are using the StoreOps sample frontend UI, add the following to your frontend .env file:
+
+```
+NEXT_PUBLIC_API_URL=https://admin-portal-domain/api/{storeId}
+```
+
+### Available API Endpoints
+
+- Billboards: `/api/{storeId}/billboards`
+- Categories: `/api/{storeId}/categories`
+- Sizes: `/api/{storeId}/sizes`
+- Colors: `/api/{storeId}/colors`
+- Products: `/api/{storeId}/products`
+- Orders: `/api/{storeId}/orders`
+
+For more detailed information about the StoreOps project and its API, please visit our documentation:
+
+[StoreOps Documentation](https://storeops-admin.vercel.app/docs)
+
+## Project Structure
+
+```
+├── actions/
+├── app/
+│   ├── (auth)/
+│   ├── (dashboard)/
+│   ├── (root)/
+│   └── api/
+├── assets/
+├── components/
+│   └── ui/
+├── docs/
+├── hooks/
+├── lib/
+├── prisma/
+├── providers/
+└── public/
+```
+
+- `actions/`: Server-side actions
+- `app/`: Main application directory (Next.js 14 app router)
+  - `(auth)/`: Authentication-related pages
+  - `(dashboard)/`: Dashboard pages and components
+  - `(root)/`: Root-level pages
+  - `api/`: API routes
+- `assets/`: Static assets like images and SVGs
+- `components/`: Reusable React components
+  - `ui/`: UI-specific components
+- `docs/`: Documentation files
+- `hooks/`: Custom React hooks
+- `lib/`: Utility functions and libraries
+- `prisma/`: Prisma ORM configuration
+- `providers/`: React context providers
+- `public/`: Publicly accessible files
+
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute to this project, please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on how to get started, submit changes, and more.
+
+Your contributions help make this project better for everyone. Thank you for your interest and support!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you encounter any issues or need further clarification, please open an issue in this repository or contact our support team.
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
