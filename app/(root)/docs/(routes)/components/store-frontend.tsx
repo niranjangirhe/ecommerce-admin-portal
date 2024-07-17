@@ -45,8 +45,8 @@ const StoreFrontEndDoc = () => {
       <CodeBox description={`NEXT_PUBLIC_API_URL=`} />
 
       <p className="mb-4">
-        You'll get this value from the admin portal in settings section. Check
-        out{" "}
+        You&apos;ll get this value from the admin portal in settings section.
+        Check out{" "}
         <a href="/docs#base-url" className="underline text-blue-800">
           Base URL
         </a>
