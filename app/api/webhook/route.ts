@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       ].filter(Boolean);
       const addressString = addressComponents.join(", ");
 
-      await prismadb.order.update({
+      const order = await prismadb.order.update({
         where: {
           id: session.metadata?.orderId,
         },
@@ -59,10 +59,15 @@ export async function POST(req: NextRequest) {
         },
       });
 
+      if (!order) {
+        console.error(`⚠️ Order ${session.metadata?.orderId} not found.`);
+        return new NextResponse(`Order not found`, { status: 404 });
+      }
       console.log(`✅ Order ${session.metadata?.orderId} marked as paid.`);
+      return new NextResponse(null, { status: 200 });
     }
 
-    return new NextResponse(null, { status: 200 });
+    throw new Error(`Unhandled event type: ${event.type}`);
   } catch (e) {
     console.error(`⚠️ Error processing webhook:`, e);
     return new NextResponse(`Webhook Error: ${e}`, { status: 500 });
