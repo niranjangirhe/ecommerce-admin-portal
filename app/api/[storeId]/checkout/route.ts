@@ -25,7 +25,7 @@ export async function POST(
 ) {
   const body = await req.json();
   const orders: Order[] = body.orders;
-  const checkoutUrl = body.checkoutUrl;
+  const checkoutUrl: string = body.checkoutUrl;
 
   if (!orders || !Array.isArray(orders) || orders.length === 0) {
     return new NextResponse("Orders field is required", {
