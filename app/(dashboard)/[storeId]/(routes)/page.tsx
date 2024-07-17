@@ -44,12 +44,6 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
 };
 
 const DashboardContent = async ({ storeId }: { storeId: string }) => {
-  const store = await prismadb.store.findFirst({
-    where: {
-      id: storeId,
-    },
-  });
-
   const totalRevenue = await getTotalRevenue(storeId);
   const { totalActive, totalArchived } = await getTotalProducts(storeId);
   const {
