@@ -46,9 +46,9 @@ const OrderList = async ({ storeId }: { storeId: string }) => {
     id: order.id,
     orderItems: order.orderItems.map((orderItem) => ({
       id: orderItem.id,
-      name: orderItem.product.name,
+      name: orderItem.product?.name || "",
       quantity: orderItem.quantity,
-      price: Number(orderItem.product.price),
+      price: Number(orderItem.product?.price || 0),
     })),
     name: order.name,
     phone: order.phone,
