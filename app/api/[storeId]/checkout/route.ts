@@ -57,10 +57,10 @@ export async function POST(
     });
   }
 
-  const FRONTEND_STORE_URL = store?.frontEndUrl;
+  const CHECKOUT_URL = store?.checkoutUrl;
 
-  if (!FRONTEND_STORE_URL) {
-    return new NextResponse("Store frontend URL not found", {
+  if (!CHECKOUT_URL) {
+    return new NextResponse("Store check out url not found", {
       status: 400,
       headers: corsHeaders,
     });
@@ -120,8 +120,8 @@ export async function POST(
     phone_number_collection: {
       enabled: true,
     },
-    success_url: `${FRONTEND_STORE_URL}/cart?success=1&orderId=${order.id}`,
-    cancel_url: `${FRONTEND_STORE_URL}/cart?canceled=1&orderId=${order.id}`,
+    success_url: `${CHECKOUT_URL}?success=1&orderId=${order.id}`,
+    cancel_url: `${CHECKOUT_URL}?canceled=1&orderId=${order.id}`,
     metadata: {
       orderId: order.id,
     },
