@@ -21,9 +21,10 @@ type Order = {
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string; checkoutUrl: string } }
+  { params }: { params: { storeId: string } }
 ) {
   const orders: Order[] = (await req.json()).orders;
+  const checkoutUrl = (await req.json()).checkoutUrl;
 
   if (!orders || !Array.isArray(orders) || orders.length === 0) {
     return new NextResponse("Orders field is required", {
@@ -57,7 +58,7 @@ export async function POST(
     });
   }
 
-  if (!params.checkoutUrl) {
+  if (!checkoutUrl) {
     return new NextResponse("Store check out url not found", {
       status: 400,
       headers: corsHeaders,
@@ -118,8 +119,8 @@ export async function POST(
     phone_number_collection: {
       enabled: true,
     },
-    success_url: `${params.checkoutUrl}?success=1&orderId=${order.id}`,
-    cancel_url: `${params.checkoutUrl}?canceled=1&orderId=${order.id}`,
+    success_url: `${checkoutUrl}?success=1&orderId=${order.id}`,
+    cancel_url: `${checkoutUrl}?canceled=1&orderId=${order.id}`,
     metadata: {
       orderId: order.id,
     },
