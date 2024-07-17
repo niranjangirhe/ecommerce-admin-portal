@@ -10,10 +10,16 @@ const Footer = () => {
             <LogoNoText />
           </div>
           <div>
-            <a href="#" className="text-md block">
+            <a
+              href="https://storeops-frontend.vercel.app/"
+              className="text-md block"
+            >
               Sample website
             </a>
-            <a href="#" className="text-md block">
+            <a
+              href="https://storeops-admin.vercel.app/docs"
+              className="text-md block"
+            >
               API Documentation
             </a>
           </div>
@@ -21,7 +27,7 @@ const Footer = () => {
             <a href="#" className="text-md block">
               Video Tutorial
             </a>
-            <a href="#" className="text-md block">
+            <a href="https://girhe.com" className="text-md block">
               Developer website
             </a>
           </div>
@@ -29,19 +35,22 @@ const Footer = () => {
             <a href="#" className="text-md block">
               Linked In Post
             </a>
-            <a href="#" className="text-md block">
+            <a
+              href="https://girhe.com/#:~:text=Blender%20and%20Krita-,CONTACT,-Connect%20With%20Me"
+              className="text-md block"
+            >
               Get in touch
             </a>
           </div>
         </div>
         <div className="grid grid-flow-col gap-5 content-center justify-center">
-          <a href="#">
+          <a href="https://www.instagram.com/girhe_niranjan/">
             <Instagram size={32} />
           </a>
-          <a href="#">
+          <a href="https://www.linkedin.com/in/niranjan-girhe/">
             <Linkedin size={32} />
           </a>
-          <a href="#">
+          <a href="https://github.com/niranjangirhe/storeops-admin-portal">
             <Github size={32} />
           </a>
         </div>

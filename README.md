@@ -29,7 +29,7 @@ Follow these steps to set up the StoreOps project locally:
 1. Clone the repository:
 
 ```
-git clone https://github.com/niranjangirhe/ecommerce-admin-portal.git
+git clone https://github.com/niranjangirhe/storeops-admin-portal.git
 ```
 
 2. Install dependencies (Node.js version 20 is recommended):

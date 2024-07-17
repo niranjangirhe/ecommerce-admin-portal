@@ -12,7 +12,7 @@ const GettingStartedDoc = () => {
       <ol className="list-decimal list-inside space-y-4 mb-6">
         <li>
           <p className="inline">Clone the repository:</p>
-          <CodeBox description="git clone https://github.com/niranjangirhe/ecommerce-admin-portal.git" />
+          <CodeBox description="git clone https://github.com/niranjangirhe/storeops-admin-portal.git" />
         </li>
 
         <li>
