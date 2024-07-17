@@ -8,6 +8,7 @@ import OrderAPIDoc from "./orders";
 import GettingStartedDoc from "./getting-started";
 import IntroductionDoc from "./introduction";
 import StoreFrontEndDoc from "./store-frontend";
+import CheckoutDoc from "./checkout";
 
 export const sections = [
   {
@@ -52,8 +53,13 @@ export const sections = [
   },
   {
     id: "orders",
-    title: "Orders",
+    title: "Track Orders",
     content: <OrderAPIDoc />,
+  },
+  {
+    id: "checkout",
+    title: "Checkout",
+    content: <CheckoutDoc />,
   },
   {
     id: "store-front-end",

@@ -50,7 +50,30 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(order);
+    if (!order) {
+      return new NextResponse("Order not found", { status: 404 });
+    }
+
+    const formattedOrder = {
+      ...order,
+      phone: `***-${order.phone.slice(-4)}`,
+      // email: show only first 3 characters of email and last 1 character and then domain,
+      email: `${order.email.slice(0, 2)}***${order.email.slice(
+        order.email.indexOf("@") - 2,
+        order.email.indexOf("@")
+      )}@${order.email.split("@")[1]}`,
+      orderItems: order.orderItems.map((item) => {
+        return {
+          ...item,
+          product: {
+            ...item.product,
+            description: item.product?.description.toString("utf-8"),
+          },
+        };
+      }),
+    };
+
+    return NextResponse.json(formattedOrder);
   } catch (error) {
     console.error("[ORDER_GET]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
