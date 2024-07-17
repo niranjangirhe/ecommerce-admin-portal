@@ -9,7 +9,7 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const { storeId } = params;
-    const { name, homepageBillboardId, frontEndUrl } = await req.json();
+    const { name, homepageBillboardId } = await req.json();
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
@@ -28,7 +28,6 @@ export async function PATCH(
         name,
         homepageBillboardId:
           homepageBillboardId === "null" ? null : homepageBillboardId,
-        frontEndUrl,
       },
     });
 

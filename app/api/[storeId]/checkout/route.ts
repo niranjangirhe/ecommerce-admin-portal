@@ -21,7 +21,7 @@ type Order = {
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string; checkoutUrl: string } }
 ) {
   const orders: Order[] = (await req.json()).orders;
 
@@ -57,9 +57,7 @@ export async function POST(
     });
   }
 
-  const CHECKOUT_URL = store?.checkoutUrl;
-
-  if (!CHECKOUT_URL) {
+  if (!params.checkoutUrl) {
     return new NextResponse("Store check out url not found", {
       status: 400,
       headers: corsHeaders,
@@ -120,8 +118,8 @@ export async function POST(
     phone_number_collection: {
       enabled: true,
     },
-    success_url: `${CHECKOUT_URL}?success=1&orderId=${order.id}`,
-    cancel_url: `${CHECKOUT_URL}?canceled=1&orderId=${order.id}`,
+    success_url: `${params.checkoutUrl}?success=1&orderId=${order.id}`,
+    cancel_url: `${params.checkoutUrl}?canceled=1&orderId=${order.id}`,
     metadata: {
       orderId: order.id,
     },

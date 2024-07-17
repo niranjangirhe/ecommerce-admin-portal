@@ -44,7 +44,6 @@ interface SettingsFormProps {
 const formSchema = z.object({
   name: z.string().min(1),
   homepageBillboardId: z.string().optional().nullable(),
-  checkoutUrl: z.string().optional().nullable(),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
@@ -60,7 +59,6 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     defaultValues: {
       name: initialData.name,
       homepageBillboardId: initialData.homepageBillboardId,
-      checkoutUrl: initialData.checkoutUrl,
     },
   });
 
@@ -165,24 +163,6 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                       <SelectItem value={"null"}>None</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="checkoutUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Checkout URL</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Checkout URL"
-                      {...field}
-                      value={field.value || undefined}
-                    />
-                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
