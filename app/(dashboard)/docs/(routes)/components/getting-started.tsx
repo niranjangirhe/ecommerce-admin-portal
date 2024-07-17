@@ -1,11 +1,11 @@
 import { ApiAlert } from "@/components/ui/api-alert";
 import { CodeBox } from "@/components/ui/code-box";
 
-const OrderAPIDoc = () => {
+const GettingStartedDoc = () => {
   return (
     <div>
       <p className="mb-4">
-        Follow these steps to set up the ecommerce admin portal on your local
+        Follow these steps to set up the StoreOps admin portal on your local
         machine:
       </p>
 
@@ -68,4 +68,4 @@ const OrderAPIDoc = () => {
   );
 };
 
-export default OrderAPIDoc;
+export default GettingStartedDoc;

@@ -7,6 +7,7 @@ import ProductAPIDoc from "./products";
 import OrderAPIDoc from "./orders";
 import GettingStartedDoc from "./getting-started";
 import IntroductionDoc from "./introduction";
+import StoreFrontEndDoc from "./store-frontend";
 
 export const sections = [
   {
@@ -53,5 +54,10 @@ export const sections = [
     id: "orders",
     title: "Orders",
     content: <OrderAPIDoc />,
+  },
+  {
+    id: "store-front-end",
+    title: "Store Front End setup guide",
+    content: <StoreFrontEndDoc />,
   },
 ];
