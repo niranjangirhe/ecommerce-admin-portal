@@ -51,7 +51,7 @@ model Category {
   storeId     String
   store       Store      @relation("StoreToCategory", fields: [storeId], references: [id], onDelete: Cascade)
   billboardId String?
-  billboard   Billboard? @relation(fields: [billboardId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  billboard   Billboard? @relation(fields: [billboardId], references: [id], onDelete: SetNull)
   name        String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -104,9 +104,9 @@ model Product {
   colorId     String
   color       Color       @relation(fields: [colorId], references: [id])
   images      Image[]
-  orderItems  OrderItem[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  OrderItem   OrderItem[]
 
   @@index([storeId])
   @@index([categoryId])
@@ -160,11 +160,11 @@ model Order {
 }
 
 model OrderItem {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   orderId   String
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
   quantity  Int
   // price     Decimal
 

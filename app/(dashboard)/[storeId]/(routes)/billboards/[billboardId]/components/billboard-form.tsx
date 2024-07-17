@@ -90,6 +90,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
       router.refresh();
       toast.success("Billboard deleted.");
     } catch (error) {
+      console.error(error);
       toast.error(
         "Make sure to delete all categories using this billboard. And remove it as homepage billboard from the store settings."
       );

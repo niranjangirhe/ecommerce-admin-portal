@@ -39,7 +39,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.refresh();
       toast.success("Category deleted.");
     } catch (error) {
-      toast.error("Make sure to delete all products using this categoryß.");
+      toast.error("Make sure to delete all products using this category.");
     } finally {
       setLoading(false);
       setOpen(false);
