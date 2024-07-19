@@ -45,12 +45,12 @@ export const OrderClient: React.FC<OrderClientProps> = ({ data }) => {
       />
       <Heading title="API" description="API calls for Orders" />
       <Separator />
-      <ApiAlert title="GET" variant="admin" description={`${BASEURL}/orders`} />
       <ApiAlert
         title="GET"
         variant="public"
         description={`${BASEURL}/orders/{orderId}?phone={phone}`}
       />
+      <ApiAlert title="GET" variant="admin" description={`${BASEURL}/orders`} />
       <ApiAlert
         title="PATCH"
         variant="admin"

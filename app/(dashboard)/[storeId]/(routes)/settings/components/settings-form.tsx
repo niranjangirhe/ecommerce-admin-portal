@@ -78,13 +78,15 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(`/api/stores/${params.storeId}`).catch((error) => {
+        throw new Error(error.response.data);
+      });
       router.refresh();
       router.push("/setup");
       toast.success("Store deleted successfully.");
     } catch (error) {
       console.error(error);
-      toast.error("Make sure to delete all products and categories first.");
+      toast.error(String(error));
     } finally {
       setLoading(false);
       setOpen(false);
@@ -181,8 +183,13 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         variant="public"
       />
       <ApiAlert
-        title="Homepage Billboard API GET"
+        title="Homepage Billboard API - GET"
         description={`${origin}/api/${params.storeId}/billboards/homepage`}
+        variant="public"
+      />
+      <ApiAlert
+        title="Checkout API - POST"
+        description={`${origin}/api/${params.storeId}/checkout`}
         variant="public"
       />
     </>

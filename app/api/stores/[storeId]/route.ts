@@ -60,6 +60,12 @@ export async function DELETE(
         data: { homepageBillboardId: null },
       });
 
+      await prisma.product.deleteMany({
+        where: {
+          storeId,
+        },
+      });
+
       return prisma.store.delete({
         where: {
           id: storeId,
@@ -69,8 +75,11 @@ export async function DELETE(
     });
 
     return NextResponse.json(store);
-  } catch (error) {
+  } catch (error: any) {
     console.error("[STORE_DELETE]", error);
+    if(error.code === "P2014") {
+      return new NextResponse("Make sure you deleted all products", { status: 404 });
+    }
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

@@ -108,12 +108,35 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const billboard = await prismadb.billboard.deleteMany({
-      where: {
-        id: billboardId,
-        storeId,
-      },
-    });
+    let billboard= null;
+
+    if(storeByUserId.homepageBillboardId === billboardId) {
+
+    billboard = await prismadb.store
+      .update({
+        where: { id: storeId },
+        data: { homepageBillboardId: null },
+      })
+      .then(() => {
+        return prismadb.billboard.deleteMany({
+          where: {
+            id: billboardId,
+            storeId,
+          },
+        });
+      });
+    } else {
+      billboard = await prismadb.billboard.deleteMany({
+        where: {
+          id: billboardId,
+          storeId,
+        },
+      });
+    }
+
+    if (!billboard) {
+      return new NextResponse("Billboard not found", { status: 404 });
+    }
 
     return NextResponse.json(billboard);
   } catch (error) {

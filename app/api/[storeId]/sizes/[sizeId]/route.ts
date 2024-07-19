@@ -127,8 +127,11 @@ export async function DELETE(
     });
 
     return NextResponse.json(size);
-  } catch (error) {
+  } catch (error: any) {
     console.error("[SIZE_DELETE]", error);
+    if(error.code === "P2014") {
+      return new NextResponse("Some product has this size assigned", { status: 404 });
+    }
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

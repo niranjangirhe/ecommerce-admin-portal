@@ -80,12 +80,16 @@ const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`);
+      await axios
+        .delete(`/api/${params.storeId}/sizes/${params.sizeId}`)
+        .catch((error) => {
+          throw new Error(error.response.data);
+        });
       router.push(`/${params.storeId}/sizes`);
       router.refresh();
       toast.success("Size deleted.");
     } catch (error) {
-      toast.error("Make sure to delete all products using this size.");
+      toast.error(String(error));
     } finally {
       setLoading(false);
       setOpen(false);

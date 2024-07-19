@@ -85,12 +85,16 @@ const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/colors/${params.colorId}`);
+      await axios
+        .delete(`/api/${params.storeId}/colors/${params.colorId}`)
+        .catch((error) => {
+          throw new Error(error.response.data);
+        });
       router.push(`/${params.storeId}/colors`);
       router.refresh();
       toast.success("Color deleted.");
     } catch (error) {
-      toast.error("Make sure to delete all products using this color.");
+      toast.error(String(error));
     } finally {
       setLoading(false);
       setOpen(false);

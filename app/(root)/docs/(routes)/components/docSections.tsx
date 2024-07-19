@@ -9,6 +9,7 @@ import GettingStartedDoc from "./getting-started";
 import IntroductionDoc from "./introduction";
 import StoreFrontEndDoc from "./store-frontend";
 import CheckoutDoc from "./checkout";
+import HomepageAPIDoc from "./homepage";
 
 export const sections = [
   {
@@ -32,12 +33,17 @@ export const sections = [
     content: <BillboardAPIDoc />,
   },
   {
+    id: "homepage-billboard",
+    title: "Homepage Billboard",
+    content: <HomepageAPIDoc />,
+  },
+  {
     id: "categories",
     title: "Categories",
     content: <CategoryAPIDoc />,
   },
   {
-    id: "Sizes",
+    id: "sizes",
     title: "Sizes",
     content: <SizeAPIDoc />,
   },

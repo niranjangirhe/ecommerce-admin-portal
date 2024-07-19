@@ -75,8 +75,11 @@ export async function GET(
     });
 
     return NextResponse.json(colors);
-  } catch (error) {
+  } catch (error: any) {
     console.error("[COLORS_GET]", error);
+    if(error.code === "P2014") {
+      return new NextResponse("Some product has this color assigned", { status: 403 });
+    }
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

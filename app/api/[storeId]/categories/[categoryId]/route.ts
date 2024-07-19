@@ -131,9 +131,14 @@ export async function DELETE(
       },
     });
 
+    console.log(category);
+
     return NextResponse.json(category);
-  } catch (error) {
+  } catch (error: any) {
     console.error("[CATEGORY_DELETE]", error);
+    if (error.code === "P2014") {
+      return new NextResponse("Category has products", { status: 403 });
+    }
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
