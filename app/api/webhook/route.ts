@@ -9,7 +9,7 @@ import prismadb from "@/lib/prismadb";
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
-  const rawBody = await req.text();
+   const rawBody = await readStream(req.body);
   const signature = headers().get("Stripe-Signature") as string;
 
   console.log("body:", JSON.stringify(req.body, null, 2));
@@ -62,4 +62,23 @@ export async function POST(req: Request) {
   } catch (e) {
     return new NextResponse(`Webhook Error: ${e}`, { status: 400 });
   }
+}
+
+async function readStream(stream: ReadableStream | null): Promise<string> {
+  if (!stream) {
+    return '';
+  }
+
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let result = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    result += decoder.decode(value, { stream: true });
+  }
+
+  result += decoder.decode(); // Flush the decoder
+  return result;
 }
