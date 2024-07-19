@@ -5,9 +5,19 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/strip";
 import prismadb from "@/lib/prismadb";
 
+export const config = {
+  api: {
+    bodyParser: false,
+  }
+};
+
 export async function POST(req: Request) {
   const body = await req.text();
   const signature = headers().get("Stripe-Signature") as string;
+
+  console.log("Webhook called");
+  console.log("Raw body:", body);
+  console.log("Signature:", signature);
 
   let event: Stripe.Event;
 
