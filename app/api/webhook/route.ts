@@ -4,16 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/strip";
 import prismadb from "@/lib/prismadb";
 
-
-export const runtime = 'edge';
-
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
   const signature = req.headers.get("Stripe-Signature");
-
-  console.log("body:", JSON.stringify(req.body, null, 2));
-  console.log("Raw body:", rawBody);
-  console.log("Signature:", signature);
 
   let event: Stripe.Event;
 
