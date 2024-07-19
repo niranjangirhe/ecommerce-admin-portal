@@ -1,17 +1,17 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 import { stripe } from "@/lib/strip";
 import prismadb from "@/lib/prismadb";
-import getRawBody from "raw-body";
-import { NextApiRequest } from "next";
+
 
 export const runtime = 'edge'
 export const maxDuration = 10
 
-export async function POST(req: NextApiRequest) {
-  const rawBody = await getRawBody(req);
-  const signature = req.headers["stripe-signature"] as string;
+export async function POST(req: Request) {
+  const rawBody = await req.text();
+  const signature = headers().get("Stripe-Signature") as string;
 
   console.log("body:", JSON.stringify(req.body, null, 2));
   console.log("Raw body:", rawBody);
