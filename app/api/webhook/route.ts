@@ -6,8 +6,7 @@ import { stripe } from "@/lib/strip";
 import prismadb from "@/lib/prismadb";
 
 
-export const runtime = 'edge'
-export const maxDuration = 10
+export const runtime = 'edge';
 
 export async function POST(req: Request) {
   const rawBody = await req.text();
