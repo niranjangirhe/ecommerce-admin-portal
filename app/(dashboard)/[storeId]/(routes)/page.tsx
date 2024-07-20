@@ -66,9 +66,14 @@ const DashboardContent = async ({ storeId }: { storeId: string }) => {
         />
         <DashboardCard
           statTitle="Average order value"
-          statValue={formatter.format(
-            Number(totalRevenue) / (totalDelivered + totalProcessing)
-          )}
+          statValue={
+            totalDelivered + totalProcessing + totalShipped > 0
+              ? formatter.format(
+                  Number(totalRevenue) /
+                    (totalDelivered + totalProcessing + totalShipped)
+                )
+              : "N/A"
+          }
           Icon={IndianRupee}
         />
         <DashboardCard
