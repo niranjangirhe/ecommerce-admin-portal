@@ -110,7 +110,6 @@ export async function POST(
   });
 
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
     line_items,
     mode: "payment",
     billing_address_collection: "required",
@@ -130,10 +129,7 @@ export async function POST(
   return NextResponse.json(
     { url: session.url },
     {
-      headers: {
-        ...corsHeaders,
-        "Content-Type": "application/json",
-      },
+      headers: corsHeaders,
     }
   );
 }
