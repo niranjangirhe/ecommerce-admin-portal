@@ -6,8 +6,6 @@ import { stripe } from "@/lib/strip";
 import prismadb from "@/lib/prismadb";
 import { buffer } from "micro";
 
-export const runtime ='edge';
-
 
 export async function POST(req: any) {
   const body = await buffer(req);
