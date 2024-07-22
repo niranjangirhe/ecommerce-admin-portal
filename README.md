@@ -122,6 +122,39 @@ For more detailed information about the StoreOps project and its API, please vis
 - `providers/`: React context providers
 - `public/`: Publicly accessible files
 
+## Store Front End Setup Guide
+
+Follow these steps to set up the StoreOps store frontend example project on your local machine:
+[link](https://github.com/niranjangirhe/storeops-store-frontend) to frontend project github repo
+
+1. Clone the repository:
+
+```
+git clone https://github.com/niranjangirhe/storeops-store-frontend.git
+```
+
+2. Install dependencies (Node.js version 20 is recommended):
+
+```
+npm i
+```
+
+3. Set up environment variables as per the sample.env file.
+
+4. Start the development server:
+
+```
+npm run dev
+```
+
+### Environment Variables Requirements for frontend Store
+
+```
+NEXT_PUBLIC_API_URL=
+```
+
+You'll get this value from the admin portal in the settings section.
+
 ## Contributing
 
 We welcome contributions from the community! If you'd like to contribute to this project, please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on how to get started, submit changes, and more.
