@@ -23,29 +23,6 @@ export async function POST(req: Request) {
 
   try {
     const session = event.data.object as Stripe.Checkout.Session;
-    const payment_intent = event.data.object as Stripe.PaymentIntent;
-
-    await prismadb.order.update({
-        where: {
-          id: session.metadata?.orderId,
-        },
-        data: {
-          isPaid: true,
-          status: "Processing",
-        },
-      });
-
-      await prismadb.order.update({
-        where: {
-          id: payment_intent.metadata?.orderId,
-        },
-        data: {
-          isPaid: true,
-          status: "Processing",
-        },
-      });
-
-
     const address = session.customer_details?.address;
     const addressString = address?.line1 + ", " + address?.line2;
     const phone = session.customer_details?.phone || "NA";
