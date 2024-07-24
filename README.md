@@ -1,5 +1,7 @@
 # StoreOps: Next.js 14 E-Commerce Solution
 
+[checkout this video](https://youtu.be/iBbT-Pzn-aA) from more detail
+
 ## Introduction
 
 StoreOps is a comprehensive Next.js 14 e-commerce solution that includes a multi-store admin portal and a customer-facing storefront. This project provides a full-featured platform for managing multiple e-commerce stores from a single admin interface, along with a responsive frontend for customers.
